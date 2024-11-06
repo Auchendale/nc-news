@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getArticle, getComments, patchArticle } from '../utils/api-requests'
+import { getArticle, getComments, patchArticle, postComment } from '../utils/api-requests'
 
 export default function articlePage(){
 
@@ -11,10 +11,13 @@ export default function articlePage(){
     const [isError, setIsError] = useState(false)
     const [listOfComments, setListOfComments] = useState([])
     const [votesCount, setVotesCount] = useState(0);
+    const [commentBodyInput, setCommentBodyInput] = useState("")
+    const [commentPosted, setCommentPosted] = useState(false)
 
 
     useEffect(() => {
         setIsLoading(true)
+        setCommentPosted(false)
         getArticle(article_id)
             .then(({ article }) => {
                 setArticleInfo(article[0]) 
@@ -29,7 +32,7 @@ export default function articlePage(){
             .catch((err) => {
                 setIsError(true)
             })
-    }, [])
+    }, [commentPosted])
 
     function handleVote(event){
         const num = Number(event.target.value)
@@ -37,6 +40,21 @@ export default function articlePage(){
         patchArticle([num, article_id])
     }
     
+    function handleTextChange(event){
+        setCommentBodyInput(event.target.value)
+    }
+
+    function handleCommentPost(event){
+        setIsLoading(true)
+        event.preventDefault()
+        const hardCodedUsername = "jessjelly"
+        postComment(hardCodedUsername, commentBodyInput, article_id)
+            .then(() => {
+                setIsLoading(false)
+                setCommentPosted(true)
+        })
+    }
+
     if(isError){
         return <h1 className="error-loading-messages">Uh oh! Something went wrong lol</h1>
     }
@@ -64,7 +82,14 @@ export default function articlePage(){
                 <button className="downvote-button" onClick={handleVote} value={-1}>-1</button>
             </div>
         </article>
-       
+        
+        <form >
+            <fieldset className="comment-form">
+                    <legend>Post a comment!</legend>
+                    <textarea placeholder="Funny how? Funny like a clown? Funny like I amuse you?" onChange={handleTextChange}></textarea>
+                    <button onClick={handleCommentPost}>Post!</button>
+            </fieldset>
+        </form>
         <div>
             <h1 className="comment-heading">Comments:</h1>
         </div>

@@ -6,11 +6,14 @@ export default function Homepage (){
 
     const [listOfArticles, setListOfArticles] = useState([])
     const [isError, setIsError] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     
     useEffect(() => {
+        setIsLoading(true)
         getAllArticles()
             .then(({ articles }) => {
                 setListOfArticles(articles)
+                setIsLoading(false)
             })
             .catch((err) => {
                 setIsError(true)
@@ -18,9 +21,12 @@ export default function Homepage (){
     }, [])
     
     if(isError){
-        return <p>Uh oh! Something went wrong lol</p>
+        return <h1 className="error-loading-messages">Uh oh! Something went wrong lol</h1>
     }
 
+    if(isLoading){
+        return <h1 className="error-loading-messages">Loading...</h1>
+    }
 
     return (
         <>
@@ -46,9 +52,9 @@ export default function Homepage (){
                         <div className="articles-card-item-topic">
                             <p>kp/{article.topic}</p>
                         </div>
-                        <div className="articles-card-item-img">
+                        {/* <div className="articles-card-item-img">
                             <img src={article.article_img_url}></img>
-                        </div>
+                        </div> */}
                         </div>
                         </Link>
                         </>

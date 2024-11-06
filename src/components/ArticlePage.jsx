@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getArticle, getComments } from '../utils/api-requests'
+import { getArticle, getComments, patchArticle } from '../utils/api-requests'
 
 export default function articlePage(){
 
@@ -10,6 +10,7 @@ export default function articlePage(){
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
     const [listOfComments, setListOfComments] = useState([])
+    const [votesCount, setVotesCount] = useState(0);
 
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export default function articlePage(){
         getArticle(article_id)
             .then(({ article }) => {
                 setArticleInfo(article[0]) 
+                setVotesCount(article[0].votes)
                 setArticleTimeStamp([article[0].created_at.split("T")[0], article[0].created_at.split("T")[1].split(".")[0]])
                 return getComments(article_id)
             })
@@ -28,6 +30,12 @@ export default function articlePage(){
                 setIsError(true)
             })
     }, [])
+
+    function handleVote(event){
+        const num = Number(event.target.value)
+        setVotesCount((a) => a + num)
+        patchArticle([num, article_id])
+    }
     
     if(isError){
         return <h1 className="error-loading-messages">Uh oh! Something went wrong lol</h1>
@@ -50,8 +58,16 @@ export default function articlePage(){
             <figure className="article-img">
                 <img src={articleInfo.article_img_url}></img> 
             </figure>
+            <div className="article-page-vote-buttons">
+                <p className="article-vote-count">Votes: {votesCount}</p>
+                <button className="upvote-button" onClick={handleVote} value={1}>+1</button>
+                <button className="downvote-button" onClick={handleVote} value={-1}>-1</button>
+            </div>
         </article>
-        <h1 className="comment-heading">Comments:</h1>
+       
+        <div>
+            <h1 className="comment-heading">Comments:</h1>
+        </div>
         <ul className="comments-list">
             {listOfComments.map((comment) => {
                 return (

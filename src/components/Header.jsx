@@ -11,7 +11,7 @@ export default function Header (){
                 <img id="kpedditLogo" src={logo}></img>
             </div>
             <div className="header-grid-item-title">
-                <h1>kpeddit</h1>
+                <h1>keppit</h1>
             </div>
             <div className="header-grid-item-topic">
                 <h2></h2>

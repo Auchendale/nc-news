@@ -332,6 +332,8 @@
   width: 35%;
   text-align: center;
   float:left;
+  box-shadow: 5px 5px rgb(185, 166, 211);
+
 }
 
 .downvote-button{
@@ -346,6 +348,8 @@
   width: 35%;
   text-align: center;
   float:right;
+  box-shadow: 5px 5px rgb(185, 166, 211);
+
 }
 
 .article-vote-count{
@@ -363,4 +367,44 @@
   margin-bottom: 32px;
   float: right;
   box-shadow: 5px 5px rgb(185, 166, 211);
+}
+
+.comment-form{
+  margin-left:10%;
+  margin-right:10%;
+  padding-top:25px;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+}
+
+.comment-form > button{
+  font-size: calc((1.25vw + 1.25vh));
+  background-color: rgb(149, 223, 115);
+  color: rgb(79, 57, 104);
+  padding: 15px;
+  margin:16px;
+  margin-right:32px;
+  border: 0px;
+  width: 25%;
+  text-align: center;
+  float:right;
+  box-shadow: 5px 5px rgb(185, 166, 211);
+
+}
+
+.comment-form > textarea{
+  width: 80%;
+  height:100px;
+  margin-left:10%;
+  font-size: calc((1vw + 0.75vh));
+}
+
+.comment-form > legend{
+  font-size: calc((1vw + 0.75vh));
+  background-color:rgb(233, 210, 247);
+  padding-left: 15px;
+  padding-right: 15px;
+  font-weight: 600;
+  box-shadow: 5px 5px rgb(185, 166, 211);
+
 }

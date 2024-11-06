@@ -38,3 +38,15 @@ export function patchArticle(patchArr){
             return data
         })
 }
+
+export function postComment(username, body, article_id){
+    const commentData = {
+        username: username,
+        body: body
+    }
+    console.log(commentData, "input for post")
+    return apiClient.post(`/api/articles/${article_id}/comments`, commentData)
+        .then(({ data }) => {
+            console.log(data, "output for post")
+        })
+}

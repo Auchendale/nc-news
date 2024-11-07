@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { getArticle, getComments, patchArticle, postComment } from '../utils/api-requests'
+import CommentCard from './CommentCard'
+import { UserContext } from '../contexts/User'
 
 export default function articlePage(){
 
@@ -13,11 +15,15 @@ export default function articlePage(){
     const [votesCount, setVotesCount] = useState(0);
     const [commentBodyInput, setCommentBodyInput] = useState("")
     const [commentPosted, setCommentPosted] = useState(false)
+    const [commentDeleted, setCommentDeleted] = useState(false)
+    const {user, setUser} = useContext(UserContext)
+
 
 
     useEffect(() => {
         setIsLoading(true)
         setCommentPosted(false)
+        setCommentDeleted(false)
         getArticle(article_id)
             .then(({ article }) => {
                 setArticleInfo(article[0]) 
@@ -32,7 +38,7 @@ export default function articlePage(){
             .catch((err) => {
                 setIsError(true)
             })
-    }, [commentPosted])
+    }, [commentPosted, commentDeleted])
 
     function handleVote(event){
         const num = Number(event.target.value)
@@ -48,7 +54,7 @@ export default function articlePage(){
         setIsLoading(true)
         event.preventDefault()
         const hardCodedUsername = "jessjelly"
-        postComment(hardCodedUsername, commentBodyInput, article_id)
+        postComment(user, commentBodyInput, article_id)
             .then(() => {
                 setIsLoading(false)
                 setCommentPosted(true)
@@ -95,17 +101,7 @@ export default function articlePage(){
         </div>
         <ul className="comments-list">
             {listOfComments.map((comment) => {
-                return (
-                    <article className="comment-card" key={comment.comment_id}>
-                        <div className="comment-card-item-vote-background"></div>
-                        <p className="comment-card-author"> {comment.author} </p>
-                        <p className="comment-card-body"> {comment.body} </p>
-                        <div className="comment-card-time-stamp"> 
-                            {comment.created_at.split("T")[1].split(".")[0]}, {comment.created_at.split("T")[0]}
-                        </div>
-                        <div className="comment-card-votes"> Votes: <br></br>{comment.votes}</div>
-                    </article>
-                )
+                return <CommentCard comment={comment} setCommentDeleted={setCommentDeleted} key={comment.comment_id}/>
             })}
         </ul>
     </>

@@ -255,11 +255,13 @@
   height: 100%;
   margin-bottom: 32px;
   background-color:rgb(252, 247, 255);
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
 }
 
 .comment-card-item-vote-background{
   grid-column: 7 / 9;
-  grid-row: 1 / 8;
+  grid-row: 1 / 10;
   background-color:rgb(233, 210, 247);
   border-left-color:rgb(79, 57, 104);
   border-left-width: 5px;
@@ -310,6 +312,22 @@
   font-weight: 600;
   margin-bottom: 32px;
 
+}
+
+.comment-card-delete{
+  grid-row: 9;
+  grid-column: 5 / 7;
+  font-size: calc((0.75vw + 0.75vh));
+  background-color: rgb(219, 98, 42);
+  color: rgb(104, 70, 57);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin:16px;
+  border: 0px;
+  text-align: center;
+  float:right;
+  box-shadow: 5px 5px rgb(185, 166, 211);
+  color: rgb(240, 232, 250);
 }
 
 .article-card-vote-buttons{
@@ -408,3 +426,4 @@
   box-shadow: 5px 5px rgb(185, 166, 211);
 
 }
+

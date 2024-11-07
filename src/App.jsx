@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, createContext  } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Homepage from './components/Homepage'
 import ArticlePage from './components/ArticlePage'
 import {Routes, Route} from "react-router-dom"
 
-function App() {
+export function App() {
 
   return (
     <>
@@ -18,4 +18,4 @@ function App() {
   )
 }
 
-export default App
+

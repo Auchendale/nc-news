@@ -1,6 +1,6 @@
 #root {
   margin-top: 0px;
-  background-color: rgb(240, 232, 250);
+  background-color: rgb(153, 154, 243);
 }
 
 :root {
@@ -11,7 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(240, 232, 250);
+  background-color: rgb(153, 154, 243);
 
 }
 
@@ -68,7 +68,7 @@
   align-self: center;
   text-align: center;
   color: rgb(59, 30, 138);
-  font-size: calc(1.25vw + 1.25vh)
+  font-size: calc(1vw + 1vh)
 }
 .header-links{
   grid-column: 1 / 6;
@@ -114,7 +114,7 @@
   height: 100%;
   margin-left: 3%;
   margin-bottom: 32px;
-  background-color:rgb(252, 247, 255);
+  background-color:rgb(247, 248, 255);
 }
 
 .articles-card-item1{

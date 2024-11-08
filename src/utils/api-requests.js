@@ -10,9 +10,14 @@ export function randomNumber(){
     return randomNum
 }
 
-export function getAllArticles(){
-    return apiClient.get('/api/articles')
+export function getAllArticles(category){
+    return apiClient.get('/api/articles', {
+        params: {
+            topic: category
+        }
+    })
         .then(({ data }) => {
+            console.log(data)
             return data
         })
 }
@@ -44,9 +49,14 @@ export function postComment(username, body, article_id){
         username: username,
         body: body
     }
-    console.log(commentData, "input for post")
     return apiClient.post(`/api/articles/${article_id}/comments`, commentData)
         .then(({ data }) => {
-            console.log(data, "output for post")
+        })
+}
+
+export function deleteComment(comment_id){
+    return apiClient.delete(`/api/comments/${comment_id}`)
+        .then(({ data }) => {
+            return data
         })
 }

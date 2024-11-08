@@ -1,7 +1,8 @@
 // import './index.css'
-import App from './App.jsx'
+import { App } from './App.jsx'
 import ReactDOM from "react-dom/client"
-import {BrowserRouter} from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
+import { UserProvider } from './contexts/User.jsx'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
@@ -9,6 +10,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   
   <BrowserRouter>
-    <App />
+    <UserProvider>
+      <App/>
+    </UserProvider>
   </BrowserRouter>,
 )

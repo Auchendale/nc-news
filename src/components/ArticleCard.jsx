@@ -20,15 +20,15 @@ export default function ArticleCard({ article }){
     <Link to={`/article/${article.article_id}`} style={{textDecoration:'none', color:'inherit'}}>
         <article className="article-card" >
             <p className="articles-card-item1">
-                <a className="articles-card-item1-title">{article.title} </a>
-                <a className="articles-card-item1-author">by {article.author}</a>
+                <b className="articles-card-item1-title" >{article.title} </b>
+                <em className="articles-card-item1-author">by {article.author}</em>
             </p>                        
             <p className="articles-card-item-time-stamp">{article.created_at.split('T')[0]}</p>
             <p className="articles-card-item-comment-count">Comments: {article.comment_count}</p>
             <p className="articles-card-item-topic">kp/{article.topic}</p>
             <div className="articles-card-item-vote-background"></div>
             <p className="articles-card-item-vote-count">
-                <a >Votes:</a> <a>{votesCount}</a>
+                <b >Votes:</b> <b>{votesCount}</b>
             </p>
         </article>
     </Link>

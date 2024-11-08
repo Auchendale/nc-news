@@ -17,7 +17,6 @@ export function getAllArticles(category){
         }
     })
         .then(({ data }) => {
-            console.log(data)
             return data
         })
 }

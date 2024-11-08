@@ -18,7 +18,7 @@ export default function ArticleCard({ article }){
 
     return <>
     <Link to={`/article/${article.article_id}`} style={{textDecoration:'none', color:'inherit'}}>
-        <article className="article-card" key={`${article.author}.${article.article_id}`}>
+        <article className="article-card" >
             <p className="articles-card-item1">
                 <a className="articles-card-item1-title">{article.title} </a>
                 <a className="articles-card-item1-author">by {article.author}</a>

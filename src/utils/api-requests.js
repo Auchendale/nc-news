@@ -10,9 +10,14 @@ export function randomNumber(){
     return randomNum
 }
 
-export function getAllArticles(){
-    return apiClient.get('/api/articles')
+export function getAllArticles(category){
+    return apiClient.get('/api/articles', {
+        params: {
+            topic: category
+        }
+    })
         .then(({ data }) => {
+            console.log(data)
             return data
         })
 }

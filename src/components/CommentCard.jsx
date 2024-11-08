@@ -1,13 +1,17 @@
-import React, {useContext } from 'react'
+import React, {useContext, useState } from 'react'
 import { deleteComment } from '../utils/api-requests'
 import { UserContext } from '../contexts/User'
 
 
 export default function CommentCard({ comment, setCommentDeleted }){
+
     const {user, setUser} = useContext(UserContext)
+    const [disabledSwitch, setDisabledSwitch] = useState(false)
+
 
     function handleDelete(event){
         event.preventDefault()
+        setDisabledSwitch(true)
         deleteComment(event.target.value).then(() => {
             setCommentDeleted(true)
         })
@@ -22,7 +26,7 @@ export default function CommentCard({ comment, setCommentDeleted }){
                 {comment.created_at.split("T")[1].split(".")[0]}, {comment.created_at.split("T")[0]}
             </div>
             <div className="comment-card-votes"> Votes: <br></br>{comment.votes}</div>
-            {user === comment.author ? <button className="comment-card-delete" onClick={handleDelete} value={comment.comment_id}> Delete me! </button> : null}
+            {user === comment.author ? <button id="delete-button" className="comment-card-delete" onClick={handleDelete} value={comment.comment_id} disabled={disabledSwitch}> Delete me! </button> : null}
         </article>
     )
 }

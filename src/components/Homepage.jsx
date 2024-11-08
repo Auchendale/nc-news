@@ -34,7 +34,7 @@ export default function Homepage (){
         <>
         <ul className="articles-list">
             {listOfArticles.map((article) => {
-                return <ArticleCard article={article}/>
+                return <ArticleCard article={article} key={`${article.author}.${article.article_id}`}/>
             })}
         </ul>
         </>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import { getArticle, getComments, patchArticle, postComment } from '../utils/api-requests'
-import CommentCard from './CommentCard'
+import { getArticle, patchArticle, postComment } from '../utils/api-requests'
 import { UserContext } from '../contexts/User'
+import CommentsList from './CommentsList'
 
 export default function articlePage(){
 
@@ -11,34 +11,25 @@ export default function articlePage(){
     const [articleTimeStamp, setArticleTimeStamp] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
-    const [listOfComments, setListOfComments] = useState([])
     const [votesCount, setVotesCount] = useState(0);
     const [commentBodyInput, setCommentBodyInput] = useState("")
-    const [commentPosted, setCommentPosted] = useState(false)
-    const [commentDeleted, setCommentDeleted] = useState(false)
     const {user, setUser} = useContext(UserContext)
-
-
+    const [commentPosted, setCommentPosted] = useState(false)
 
     useEffect(() => {
         setIsLoading(true)
-        setCommentPosted(false)
-        setCommentDeleted(false)
         getArticle(article_id)
             .then(({ article }) => {
                 setArticleInfo(article[0]) 
                 setVotesCount(article[0].votes)
                 setArticleTimeStamp([article[0].created_at.split("T")[0], article[0].created_at.split("T")[1].split(".")[0]])
-                return getComments(article_id)
-            })
-            .then(({ comments }) => {
-                setListOfComments(comments)
                 setIsLoading(false)
             })
             .catch((err) => {
                 setIsError(true)
             })
-    }, [commentPosted, commentDeleted])
+    }, [])
+
 
     function handleVote(event){
         const num = Number(event.target.value)
@@ -51,13 +42,11 @@ export default function articlePage(){
     }
 
     function handleCommentPost(event){
-        setIsLoading(true)
         event.preventDefault()
-        const hardCodedUsername = "jessjelly"
         postComment(user, commentBodyInput, article_id)
             .then(() => {
-                setIsLoading(false)
                 setCommentPosted(true)
+                setCommentBodyInput("")
         })
     }
 
@@ -92,18 +81,14 @@ export default function articlePage(){
         <form >
             <fieldset className="comment-form">
                     <legend>Post a comment!</legend>
-                    <textarea placeholder="Funny how? Funny like a clown? Funny like I amuse you?" onChange={handleTextChange}></textarea>
+                    <textarea placeholder="Funny how? Funny like a clown? Funny like I amuse you?" onChange={handleTextChange} value={commentBodyInput}></textarea>
                     <button onClick={handleCommentPost}>Post!</button>
             </fieldset>
         </form>
         <div>
             <h1 className="comment-heading">Comments:</h1>
         </div>
-        <ul className="comments-list">
-            {listOfComments.map((comment) => {
-                return <CommentCard comment={comment} setCommentDeleted={setCommentDeleted} key={comment.comment_id}/>
-            })}
-        </ul>
+        <CommentsList article_id={article_id} commentPosted={commentPosted} setCommentPosted={setCommentPosted}/>
     </>
     )
 }

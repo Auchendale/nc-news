@@ -1,5 +1,4 @@
 import React, {useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
 import { getAllArticles, patchArticle } from '../utils/api-requests'
 import ArticleCard from './ArticleCard'
 
@@ -11,6 +10,7 @@ export default function Homepage (){
     
     useEffect(() => {
         setIsLoading(true)
+        setIsError(false)
         getAllArticles()
             .then(({ articles }) => {
                 setListOfArticles(articles)
